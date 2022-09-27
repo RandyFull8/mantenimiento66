@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { ServiceModelArea } from 'src/app/models/serviceModelArea';
 import { ServiceModelMaquina } from 'src/app/models/serviceModelMaquina';
 import { ServiceModelMecanico} from 'src/app/models/serviceModelMecanico';
+import { ServiceModelDispositivo} from 'src/app/models/serviceModelDispositivo';
 import Swal from 'sweetalert2'
 import { NgModule } from '@angular/core';
 
@@ -23,18 +24,21 @@ export class AdminComponent implements OnInit {
   serviceModelArea: ServiceModelArea = new ServiceModelArea()
   serviceModelMaquina: ServiceModelMaquina = new ServiceModelMaquina()
   serviceModelMecanico: ServiceModelMecanico = new ServiceModelMecanico()
+  serviceModelDispositivo: ServiceModelDispositivo = new ServiceModelDispositivo()
 
   datatable: any = []
   datatable2: any = []
   datatable3: any = []
   datatable4: any = []
+  datatable5: any = []
   constructor(  public route: ActivatedRoute,private router: Router,private dBConectionService: DBConectionService,_CargarScriptsService:CargarScriptsService) { _CargarScriptsService.carga(['time']), _CargarScriptsService.carga(['NabBarFunctions'])}
   ngOnInit(): void {
-    
+
     this.onDataTable();
     this.onDataTable2();
     this.onDataTable3();
     this.onDataTable4();
+    this.onDataTable5();
   }
   onDataTable(){
     this.dBConectionService.getSolicitud().subscribe(res=>{
@@ -56,6 +60,11 @@ export class AdminComponent implements OnInit {
   onDataTable4(){
     this.dBConectionService.getSolicitudMecanico().subscribe(res=>{
   this.datatable4=res;
+    });
+  }
+  onDataTable5(){
+    this.dBConectionService.getSolicitudDispositivo().subscribe(res=>{
+  this.datatable5=res;
     });
   }
 
@@ -159,6 +168,39 @@ console.log(res)
     })
   }
 
+  onAddSolicitudDispositivo(serviceModelDispositivo: ServiceModelDispositivo): void {
+    this.dBConectionService.addDispositivo(serviceModelDispositivo).subscribe((res) => {
+      if (res) {
+console.log(res)
+
+        Swal.fire({
+          title: 'Registro de area',
+          text: "¡¡Presione el botón para confirmar!!",
+          icon: 'info',
+          showCancelButton: false,
+          confirmButtonColor: 'rgb(255, 194, 28)',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok,volver'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Registro exitoso!',
+              'success',
+
+            ),
+            //
+            this.onDataTable3();
+
+          }
+        })
+
+
+      } else {
+        alert('Error! :(')
+
+      }
+    })
+  }
 
 
 

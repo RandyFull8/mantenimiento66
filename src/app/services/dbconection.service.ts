@@ -5,6 +5,7 @@ import { ServiceModelArea } from '../models/serviceModelArea';
 import { Observable } from 'rxjs';
 import { ServiceModelMecanico } from '../models/serviceModelMecanico';
 import { ServiceModelMaquina } from '../models/serviceModelMaquina';
+import { ServiceModelDispositivo } from '../models/serviceModelDispositivo';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { ServiceModelMaquina } from '../models/serviceModelMaquina';
 export class DBConectionService {
   constructor(private http: HttpClient) {}
 
-  urlServices:string="http://172.16.200.160:8082/api/";
+  urlServices:string="http://172.16.10.239:8089/api/";
   //172.16.200.95:8083
 
   getSolicitud(){
@@ -26,6 +27,10 @@ export class DBConectionService {
    }
    getSolicitudMaquina(){
     return this.http.get(this.urlServices+'solicitudmaquina');
+
+   }
+   getSolicitudDispositivo(){
+    return this.http.get(this.urlServices+'solicituddispositivo');
 
    }
    getSolicitudMecanico(){
@@ -54,6 +59,10 @@ export class DBConectionService {
 
   addMaquina(serviceModelMaquina:ServiceModelMaquina): Observable <ServiceModelMaquina> {
     return this.http.post<ServiceModelMaquina>(this.urlServices +'Solicitudmaquina', serviceModelMaquina)
+  }
+
+  addDispositivo(serviceModelDispositivo:ServiceModelDispositivo): Observable <ServiceModelDispositivo> {
+    return this.http.post<ServiceModelDispositivo>(this.urlServices +'Solicituddispositivo', serviceModelDispositivo)
   }
   /**campos diagnostico etapa 2 */
   addDiagnostico( id_Solicitud: number, serviceModel:ServiceModel): Observable<ServiceModel> {

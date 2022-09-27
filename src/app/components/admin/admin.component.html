@@ -25,6 +25,9 @@
 
       <button class="nav-link" id="nav-machine-tab" data-bs-toggle="tab" data-bs-target="#nav-machine"
       type="button" role="tab" aria-controls="nav-machine" aria-selected="false">Agregar Maquina</button>
+
+      <button class="nav-link" id="nav-dispositivo-tab" data-bs-toggle="tab" data-bs-target="#nav-dispositivo"
+      type="button" role="tab" aria-controls="nav-dispositivo" aria-selected="false">Agregar Dispositivo</button>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
@@ -191,7 +194,7 @@
         <div class="col-sm-3">
           <input type="text" class="form-control" placeholder="Nombre" aria-label="nombre" [(ngModel)]="serviceModelMaquina.nombre">
         </div>
-        <div class="col-sm"> 
+        <div class="col-sm">
           <!-- <input type="text" class="form-control" placeholder="Área" aria-label="Area">-->
 
           <select class="form-select" id="autoSizingSelect" [(ngModel)]="serviceModelMaquina.area">
@@ -237,6 +240,65 @@
 
 
   </div>
+
+<!-- Apartado para agregar y ver dispositivos-->
+
+<div class="tab-pane fade" id="nav-dispositivo" role="tabpanel" aria-labelledby="nav-dispositivo-tab">
+  <h6>Dispositivo</h6>
+  <div class="row g-3">
+    <div class="col-sm-3">
+      <input type="text" class="form-control" placeholder="Nombre" aria-label="nombre" [(ngModel)]="serviceModelDispositivo.nombre">
+    </div>
+    <div class="col-sm">
+      <!-- <input type="text" class="form-control" placeholder="Área" aria-label="Area">-->
+
+      <select class="form-select" id="autoSizingSelect" [(ngModel)]="serviceModelDispositivo.maquina">
+        <option selected>Seleccione...</option>
+        <option *ngFor="let item of datatable3" value="{{item.nombre}}">{{item.nombre}}</option>
+
+      </select>
+
+    </div>
+    <div class="col-sm">
+      <button class="btn btn-danger" type="button" (click)="onAddSolicitudDispositivo(serviceModelDispositivo)">Agregar</button>
+    </div>
+  </div>
+
+
+    <table class="table caption-top">
+      <caption>Listado de Dispositivo</caption>
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Máquina</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of datatable5">
+
+          <td>{{item.nombre}}</td>
+          <td>{{item.maquina}}</td>
+
+
+        </tr>
+
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
   </div>
 </div>
 </body>
